@@ -1,0 +1,34 @@
+{
+  "name": "ibta-project",
+  "version": "1.0.0",
+  "description": "IBTA Dog App Server",
+  "main": "src/server.ts",
+  "scripts": {
+    "dev:watch": "nodemon",
+    "typecheck": "ts-node src/server.ts",
+    "test": "jest --forceExit --coverage --verbose",
+    "tslint": "tslint -c tslint.json -p tsconfig.json"
+  },
+  "author": "lXSPandora",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^1.12.1",
+    "jest": "^23.6.0",
+    "jsonwebtoken": "^8.3.0",
+    "moment": "^2.22.2",
+    "mongoose": "^5.3.0",
+    "nodemon": "^1.18.4",
+    "ramda": "^0.25.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.1.1"
+  },
+  "devDependencies": {
+    "@types/async": "^2.0.49",
+    "@types/jest": "^23.3.2",
+    "@types/mongoose": "^5.2.17",
+    "@types/node": "^10.11.3",
+    "prettier": "^1.14.3",
+    "ts-jest": "^23.10.3",
+    "tslint": "^5.11.0"
+  }
+}
