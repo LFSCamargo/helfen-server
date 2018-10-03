@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { Document } from 'mongoose';
 import UserModel from './UserModel';
 
-const JWT_SECRET = 'node-ibta';
+export const JWT_SECRET = 'node-ibta';
 
 export interface User extends Document {
   _id: string,
@@ -22,6 +22,7 @@ export interface UserAdd {
   cell: string,
   document: string,
 }
+
 
 export const encryptPassword = (password: string): string => bcrypt.hashSync(password, 8);
 
