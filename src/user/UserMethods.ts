@@ -1,37 +1,34 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { generateToken, authenticate, encryptPassword } from './auth';
 import { Document } from 'mongoose';
 import UserModel from './UserModel';
 
 export const JWT_SECRET = 'node-ibta';
 
 export interface User extends Document {
-  _id: string,
-  name: string,
-  password: string,
-  email: string,
-  cell: string,
-  document: string,
-  active: boolean,
+  _id: string;
+  name: string;
+  password: string;
+  email: string;
+  cell: string;
+  document: string;
+  active: boolean;
 }
 
 export interface UserAdd {
-  name: string,
-  password: string,
-  email: string,
-  cell: string,
-  document: string,
+  name: string;
+  password: string;
+  email: string;
+  cell: string;
+  document: string;
 }
 
-
-export const encryptPassword = (password: string): string => bcrypt.hashSync(password, 8);
-
-export const authenticate = (plainTextPassword: string, hash: string): boolean => bcrypt.compareSync(plainTextPassword, hash)
-
-export const generateToken = (email: string): string => `JWT ${jwt.sign({ id: email }, JWT_SECRET)}`;
-
-export const userAdd = async ({ name, password, email, cell, document }: UserAdd): Promise<string> => {
-
+export const userAdd = async ({
+  name,
+  password,
+  email,
+  cell,
+  document,
+}: UserAdd): Promise<string> => {
   const hashedPassword = encryptPassword(password);
 
   const user = new UserModel({
@@ -48,8 +45,8 @@ export const userAdd = async ({ name, password, email, cell, document }: UserAdd
 };
 
 interface Login {
-  email: string,
-  password: string,
+  email: string;
+  password: string;
 }
 
 export const userLogin = async ({ email, password }: Login): Promise<string> => {
@@ -64,8 +61,8 @@ export const userLogin = async ({ email, password }: Login): Promise<string> => 
   const isPasswordValid = authenticate(password, passwordHash);
 
   if (!isPasswordValid) {
-    throw new Error('Invalid Password')
+    throw new Error('Invalid Password');
   }
 
-  return generateToken(email)
+  return generateToken(email);
 };

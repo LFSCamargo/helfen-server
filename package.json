@@ -5,9 +5,11 @@
   "main": "src/server.ts",
   "scripts": {
     "dev:watch": "nodemon",
-    "typecheck": "ts-node src/server.ts",
+    "start": "ts-node src/server.ts",
+    "debug": "ts-node src/server.ts --inspect",
     "test": "jest --forceExit --coverage --verbose",
-    "tslint": "tslint -c tslint.json -p tsconfig.json"
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "prettier": "prettier"
   },
   "author": "lXSPandora",
   "license": "ISC",
@@ -23,6 +25,7 @@
     "node-fetch": "^2.2.0",
     "nodemailer": "^4.6.8",
     "nodemon": "^1.18.4",
+    "query-string": "^6.2.0",
     "ramda": "^0.25.0",
     "ts-node": "^7.0.1",
     "typescript": "^3.1.1"

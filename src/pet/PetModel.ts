@@ -11,9 +11,8 @@ const Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    geocode: {
-      type: [String],
-      required: true,
+    location: {
+      coordinates: { type: [Number, Number], default: [0, 0] },
     },
     type: {
       type: String,
