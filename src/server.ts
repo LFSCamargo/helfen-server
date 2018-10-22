@@ -1,10 +1,32 @@
 import { addLostPet } from './pet/PetMethods';
 import fastify from 'fastify';
+import * as R from 'ramda';
 import mongoose from 'mongoose';
 import { userAdd, userLogin } from './user/UserMethods';
 import { getUserFromJWT } from './user/auth';
 
 const app = fastify();
+
+app.get('/api/me', async (req, res) => {
+  const { authorization } = req.headers;
+
+  const user = await getUserFromJWT(authorization);
+
+  if (!user) {
+    throw new Error('Unauthenticated');
+  }
+
+  const response = JSON.stringify({
+    _id: user._id,
+    active: user.active,
+    name: user.name,
+    email: user.email,
+    cell: user.cell,
+    document: user.document,
+  });
+
+  res.send(response);
+});
 
 app.post('/api/signup', async (req, res) => {
   const { body } = req;
