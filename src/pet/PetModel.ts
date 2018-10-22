@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { User } from './UserMethods';
+import { Pet } from './PetMethods';
 
 const Schema = new mongoose.Schema(
   {
@@ -7,21 +7,27 @@ const Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    password: {
+    address: {
       type: String,
       required: true,
-      hidden: true,
     },
-    email: {
+    location: {
+      coordinates: { type: [Number, Number], default: [0, 0] },
+    },
+    type: {
       type: String,
       required: false,
       index: true,
     },
-    cell: {
+    obs: {
       type: String,
       required: true,
     },
-    document: {
+    photo: {
+      type: String,
+      required: false,
+    },
+    user: {
       type: String,
       required: true,
     },
@@ -35,8 +41,8 @@ const Schema = new mongoose.Schema(
       createdAt: 'createdAt',
       updatedAt: 'updatedAt',
     },
-    collection: 'user',
+    collection: 'pet',
   },
 );
 
-export default mongoose.model<User>('User', Schema);
+export default mongoose.model<Pet>('Pet', Schema);
