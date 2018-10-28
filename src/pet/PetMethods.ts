@@ -79,3 +79,52 @@ export const addLostPet = async ({
 
   return await PetModel.findOne({ _id });
 };
+
+interface GetLostPets {
+  search: string;
+  limit: number;
+  offset: number;
+}
+
+export const getLostPets = async ({ search, limit, offset }: GetLostPets): Promise<Array<Pet>> => {
+  const where = search ? {
+    name: {
+      $regex: new RegExp(`^${search}^`, 'ig'),
+    },
+    active: true,
+  } : {
+    active: true,
+  };
+
+  const pets = !offset ? await PetModel.find(where).limit(limit) :  await PetModel.find(where).skip(offset).limit(limit);
+
+  return pets;
+};
+
+interface GetMyPets {
+  userId: string;
+  limit: number;
+  offset: number;
+}
+
+export const getMyPets = async ({ userId, limit, offset }: GetMyPets): Promise<Array<Pet>> =>
+  !offset
+    ? await PetModel.find({ user: userId }).limit(limit)
+    : await PetModel.find({ user: userId }).skip(offset).limit(limit);
+
+interface MarkAsFound {
+  _id: string;
+}
+
+export const markPetAsFound = async ({ _id }: MarkAsFound): Promise<string> => {
+  const pet = await PetModel.findOne({ _id });
+
+  if (!pet) {
+    throw new Error('Pet Not Found');
+  }
+
+  await pet.update({ active: false });
+
+  return 'Pet Marcado Como Encontrado';
+};
+

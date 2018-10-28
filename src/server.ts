@@ -1,4 +1,4 @@
-import { addLostPet } from './pet/PetMethods';
+import { addLostPet, getLostPets, getMyPets, markPetAsFound } from './pet/PetMethods';
 import fastify from 'fastify';
 import * as R from 'ramda';
 import mongoose from 'mongoose';
@@ -47,6 +47,63 @@ app.post('/api/login', async (req, res) => {
 
   const response = JSON.stringify({
     token,
+  });
+
+  res.send(response);
+});
+
+app.post('/api/getMyPets', async (req, res) => {
+  const { authorization } = req.headers;
+  const { body } = req;
+
+  const user = await getUserFromJWT(authorization);
+
+  if (!user) {
+    throw new Error('Unauthenticated');
+  }
+
+  const pets = await getMyPets({ userId: user._id, limit: body.limit, offset: body.offset });
+
+  const response = JSON.stringify({
+    pets,
+  });
+
+  res.send(response);
+});
+
+app.post('/api/getLostPets', async (req, res) => {
+  const { authorization } = req.headers;
+  const { body } = req;
+
+  const user = await getUserFromJWT(authorization);
+
+  if (!user) {
+    throw new Error('Unauthenticated');
+  }
+
+  const pets = await getLostPets({ ...body });
+
+  const response = JSON.stringify({
+    pets,
+  });
+
+  res.send(response);
+});
+
+app.post('/api/markAsFound', async (req, res) => {
+  const { authorization } = req.headers;
+  const { body } = req;
+
+  const user = await getUserFromJWT(authorization);
+
+  if (!user) {
+    throw new Error('Unauthenticated');
+  }
+
+  const message = await markPetAsFound({ ...body });
+
+  const response = JSON.stringify({
+    message,
   });
 
   res.send(response);
