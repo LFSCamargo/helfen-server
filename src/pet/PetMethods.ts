@@ -53,7 +53,7 @@ export const addLostPet = async ({
   const { View } = data.Response;
 
   if (View.length === 0) {
-    throw new Error('Invalid Address');
+    throw new Error('Endereço Invalido');
   }
 
   const { Result } = View[0];
@@ -120,7 +120,7 @@ export const markPetAsFound = async ({ _id }: MarkAsFound): Promise<string> => {
   const pet = await PetModel.findOne({ _id });
 
   if (!pet) {
-    throw new Error('Pet Not Found');
+    throw new Error('Animal Não Encontrado');
   }
 
   await pet.update({ active: false });

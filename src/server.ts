@@ -13,7 +13,7 @@ app.get('/api/me', async (req, res) => {
   const user = await getUserFromJWT(authorization);
 
   if (!user) {
-    throw new Error('Unauthenticated');
+    throw new Error('Não Autenticado');
   }
 
   const response = JSON.stringify({
@@ -59,7 +59,7 @@ app.post('/api/getMyPets', async (req, res) => {
   const user = await getUserFromJWT(authorization);
 
   if (!user) {
-    throw new Error('Unauthenticated');
+    throw new Error('Não Autenticado');
   }
 
   const pets = await getMyPets({ userId: user._id, limit: body.limit, offset: body.offset });
@@ -78,7 +78,7 @@ app.post('/api/getLostPets', async (req, res) => {
   const user = await getUserFromJWT(authorization);
 
   if (!user) {
-    throw new Error('Unauthenticated');
+    throw new Error('Não Autenticado');
   }
 
   const pets = await getLostPets({ ...body });
@@ -97,7 +97,7 @@ app.post('/api/markAsFound', async (req, res) => {
   const user = await getUserFromJWT(authorization);
 
   if (!user) {
-    throw new Error('Unauthenticated');
+    throw new Error('Não Autenticado');
   }
 
   const message = await markPetAsFound({ ...body });
@@ -116,7 +116,7 @@ app.post('/api/addPet', async (req, res) => {
   const user = await getUserFromJWT(authorization);
 
   if (!user) {
-    throw new Error('Unauthenticated');
+    throw new Error('Não Autenticado');
   }
 
   const pet = await addLostPet({ ...body, user });

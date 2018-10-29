@@ -53,7 +53,7 @@ export const userLogin = async ({ email, password }: Login): Promise<string> => 
   const user = await UserModel.findOne({ email });
 
   if (!user) {
-    throw new Error('User not found');
+    throw new Error('Usuário não encontrado');
   }
 
   const { password: passwordHash } = user;
@@ -61,7 +61,7 @@ export const userLogin = async ({ email, password }: Login): Promise<string> => 
   const isPasswordValid = authenticate(password, passwordHash);
 
   if (!isPasswordValid) {
-    throw new Error('Invalid Password');
+    throw new Error('Usuário ou Senha Inválidos');
   }
 
   return generateToken(email);
