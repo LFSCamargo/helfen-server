@@ -1,13 +1,12 @@
 import { addLostPet, getLostPets, getMyPets, markPetAsFound } from './pet/PetMethods';
 import fastify from 'fastify';
-import * as R from 'ramda';
 import mongoose from 'mongoose';
-import { userAdd, userLogin } from './user/UserMethods';
+import { userAdd, userLogin, addUserPhoto } from './user/UserMethods';
 import { getUserFromJWT } from './user/auth';
 
 const app = fastify();
 
-app.get('/api/me', async (req, res) => {
+app.post('/api/me', async (req, res) => {
   const { authorization } = req.headers;
 
   const user = await getUserFromJWT(authorization);
@@ -23,6 +22,7 @@ app.get('/api/me', async (req, res) => {
     email: user.email,
     cell: user.cell,
     document: user.document,
+    photo: user.photoURI,
   });
 
   res.send(response);
@@ -124,6 +124,26 @@ app.post('/api/addPet', async (req, res) => {
   const response = JSON.stringify({
     pet,
     message: 'Pet added with success',
+  });
+
+  res.send(response);
+});
+
+app.post('/api/user/addPhoto', async (req, res) => {
+  const { authorization } = req.headers;
+  const { body } = req;
+
+  const user = await getUserFromJWT(authorization);
+
+  if (!user) {
+    throw new Error('Não Autenticado');
+  }
+
+  const message = await addUserPhoto({ ...body, _id: user._id });
+
+  const response = JSON.stringify({
+    message,
+    status: 200,
   });
 
   res.send(response);

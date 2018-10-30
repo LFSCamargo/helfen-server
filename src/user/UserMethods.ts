@@ -12,6 +12,7 @@ export interface User extends Document {
   cell: string;
   document: string;
   active: boolean;
+  photoURI: string;
 }
 
 export interface UserAdd {
@@ -65,4 +66,14 @@ export const userLogin = async ({ email, password }: Login): Promise<string> => 
   }
 
   return generateToken(email);
+};
+
+export const addUserPhoto = async ({ photoURI, _id }): Promise<string> => {
+  const user = await UserModel.findOne({ _id });
+
+  await user.update({
+    photoURI,
+  });
+
+  return 'Foto alterada com sucesso!';
 };

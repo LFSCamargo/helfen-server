@@ -3,6 +3,10 @@ import { User } from './UserMethods';
 
 const Schema = new mongoose.Schema(
   {
+    photoURI: {
+      type: String,
+      required: false,
+    },
     name: {
       type: String,
       required: true,
