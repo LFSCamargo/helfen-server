@@ -4,7 +4,7 @@
   "description": "IBTA Dog App Server",
   "main": "src/server.ts",
   "scripts": {
-    "dev:watch": "nodemon",
+    "watch": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "start": "ts-node src/server.ts",
     "debug": "ts-node src/server.ts --inspect",
     "test": "jest --forceExit --coverage --verbose",
