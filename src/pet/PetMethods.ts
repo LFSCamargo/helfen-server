@@ -84,16 +84,19 @@ interface GetLostPets {
   search: string;
   limit: number;
   offset: number;
+  user: User;
 }
 
-export const getLostPets = async ({ search, limit, offset }: GetLostPets): Promise<Array<Pet>> => {
+export const getLostPets = async ({ search, limit, offset, user }: GetLostPets): Promise<Array<Pet>> => {
   const where = search ? {
     name: {
       $regex: new RegExp(`^${search}^`, 'ig'),
     },
     active: true,
+    user: { $not: user._id },
   } : {
     active: true,
+    user: { $not: user._id },
   };
 
   const pets = !offset ? await PetModel.find(where).limit(limit) :  await PetModel.find(where).skip(offset).limit(limit);

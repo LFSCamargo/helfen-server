@@ -81,7 +81,7 @@ app.post('/api/getLostPets', async (req, res) => {
     throw new Error('Não Autenticado');
   }
 
-  const pets = await getLostPets({ ...body });
+  const pets = await getLostPets({ ...body, user });
 
   const response = JSON.stringify({
     pets,
