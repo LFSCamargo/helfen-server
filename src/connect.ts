@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGO_URI = 'mongodb://localhost/nodeibta';
+const MONGO_URI = 'mongodb://root:unibta2018A@ds018558.mlab.com:18558/unibtapet';
 
 export function connectDatabase(): void {
   mongoose.connect(MONGO_URI);
