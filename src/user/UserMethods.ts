@@ -77,3 +77,5 @@ export const addUserPhoto = async ({ photoURI, _id }): Promise<string> => {
 
   return 'Foto alterada com sucesso!';
 };
+
+export const getUserById = async ({ _id }): Promise<User> => await UserModel.findOne({ _id });

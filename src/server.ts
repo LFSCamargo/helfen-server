@@ -1,10 +1,35 @@
 import { addLostPet, getLostPets, getMyPets, markPetAsFound } from './pet/PetMethods';
 import fastify from 'fastify';
 import mongoose from 'mongoose';
-import { userAdd, userLogin, addUserPhoto } from './user/UserMethods';
+import { userAdd, userLogin, addUserPhoto, getUserById } from './user/UserMethods';
 import { getUserFromJWT } from './user/auth';
 
 const app = fastify();
+
+app.post('/api/user', async (req, res) => {
+  const { authorization } = req.headers;
+  const { body } = req;
+
+  const auth = await getUserFromJWT(authorization);
+
+  if (!auth) {
+    throw new Error('Não Autenticado');
+  }
+
+  const user = await getUserById({ ...body });
+
+  const response = JSON.stringify({
+    _id: user._id,
+    active: user.active,
+    name: user.name,
+    email: user.email,
+    cell: user.cell,
+    document: user.document,
+    photo: user.photoURI,
+  });
+
+  res.send(response);
+});
 
 app.post('/api/me', async (req, res) => {
   const { authorization } = req.headers;
