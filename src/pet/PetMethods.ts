@@ -112,8 +112,8 @@ interface GetMyPets {
 
 export const getMyPets = async ({ userId, limit, offset }: GetMyPets): Promise<Array<Pet>> =>
   !offset
-    ? await PetModel.find({ user: userId }).limit(limit)
-    : await PetModel.find({ user: userId }).skip(offset).limit(limit);
+    ? await PetModel.find({ user: userId, active: true }).limit(limit)
+    : await PetModel.find({ user: userId, active: true }).skip(offset).limit(limit);
 
 interface MarkAsFound {
   _id: string;

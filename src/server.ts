@@ -176,7 +176,7 @@ app.post('/api/user/addPhoto', async (req, res) => {
 
 const start = async () => {
   try {
-    mongoose.connect('mongodb://localhost/node-ibta');
+    mongoose.connect('mongodb://root:unibta2018A@ds018558.mlab.com:18558/unibtapet');
     console.log('Connected to mongo ✅');
     await app.listen(3000);
     console.log(`🚀  - Server started at port 3000 - 🚀`);
